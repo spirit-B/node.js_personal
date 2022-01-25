@@ -76,7 +76,7 @@ app.post('/inboard/modify/:id' , async (req, res) => {
 
 // 수정한 내용 db에 업데이트
 app.post('/inboard/completeModify/:id', async (req, res) => {
-    await Boards.updateOne({contents: req.body.contents});
+    await Boards.findByIdAndUpdate(req.params.id, {contents: req.body.contents});
     res.json({ success: '수정 완료!' })
 });
 
