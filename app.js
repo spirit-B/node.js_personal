@@ -12,7 +12,6 @@ connect();
 
 // 라우터 호출
 const lookupRouter = require('./routes/lookup');
-const router = require("./routes/lookup");
 const { data } = require("jquery");
 
 // 라우터를 여러개 쓸때만 배열 형태로 사용함
@@ -47,23 +46,39 @@ app.get('/write', (req, res) => {
 // 게시글 조회 페이지
 app.get('/inboard/:id', async (req, res) => {
     const { id } = req.params;
-    const writedData = await Boards.findById(id);
-    res.render('inboard', {list: writedData})
+    const wroteData = await Boards.findById(id);
+    res.render('inboard', {list: wroteData})
 });
 
 // 글쓴 데이터 삭제
-app.post('/inboard/:id', async (req, res) => {
+app.post('/inboard/delete/:id', async (req, res) => {
     const { id } = req.params;
     const detailData = await Boards.findById(id);
     if (detailData['password'] === Number(req.body.password)) {
         await Boards.deleteOne({ _id: id });
-        res.json({success: '삭제했습니다!'});
+        res.json({success: '삭제 완료!'});
     }
     else {
         res.json({fail: '비밀번호가 다릅니다.'})
     }
-})
+});
 
+// 수정할때 비밀번호 확인
+app.post('/inboard/modify/:id' , async (req, res) => {
+    const { id } = req.params;
+    const toModify = await Boards.findById(id);
+    if (toModify['password'] === Number(req.body.password)) {
+        res.json({ success: '수정할 내용을 입력하세요.' })
+    } else {
+        res.json({ fail: '비밀번호가 다릅니다.' })
+    }
+});
+
+// 수정한 내용 db에 업데이트
+app.post('/inboard/completeModify/:id', async (req, res) => {
+    await Boards.updateOne({contents: req.body.contents});
+    res.json({ success: '수정 완료!' })
+});
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);

@@ -28,11 +28,10 @@
             let user_password = $('#write-password').val()
             let user_contents = $('#exampleFormControlTextarea1').val()
             let user_date = Date.now;
-            let user_number = 0;
             $.ajax({
                 type: 'POST',
                 async: true,
-                url: 'api/toWrite',
+                url: '/api/toWrite',
                 dataType: 'json',
                 data: {
                     name: user_name,
