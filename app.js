@@ -1,7 +1,6 @@
 const express = require("express"); //express 패키지를 불러온다.
 const connect = require('./schemas')
 const Boards = require('./schemas/boardSchema')
-const bodyParser = require('body-parser');
 const path = require('path')
 const app = express();
 const port = 3000;
@@ -18,13 +17,8 @@ const { data } = require("jquery");
 app.use('/api', lookupRouter)
 
 // express에서 body로 전달된 데이터를 json 형식으로 읽기 위함
+app.use(express.urlencoded({extended: true}))
 app.use(express.json());
-
-
-app.use(bodyParser.urlencoded({extended: true}));
-
-// json 형식의 데이터를 파싱
-app.use(bodyParser.json())
 
 app.use('/node_modules', express.static(path.join('/node_modules')))
 

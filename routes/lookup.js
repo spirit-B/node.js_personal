@@ -1,16 +1,15 @@
 const { filter } = require("async");
 const express = require("express");
 const Boards = require('../schemas/boardSchema') // db 불러오기
-const bodyParser = require('body-parser'); // body-parser 요청
 const { format } = require("express/lib/response");
 const { findOneAndUpdate, db } = require("../schemas/boardSchema");
 const router = express.Router();
 
 
-router.use(bodyParser.urlencoded({extended: true}));
-
 // json 형식의 데이터를 파싱
-router.use(bodyParser.json())
+router.use(express.json())
+router.use(express.urlencoded({extended: true}));
+
 
 // 글쓰기 데이터 저장 -> app.js : app.use(express.json())
 router.post('/toWrite', async (req, res) => {
