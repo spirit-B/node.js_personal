@@ -16,8 +16,12 @@ router.post('/toWrite', async (req, res) => {
     const { name, title, createDate, password, contents } = req.body;
     
     // model을 생성하면서 insert까지 해줌
-    let createdData = await Boards.create({ name, title, createDate, password, contents })
-    res.json({ createdData })
+    try {
+        let createdData = await Boards.create({ name, title, createDate, password, contents })
+        res.json({ success: '글을 저장했습니다!' })
+    } catch {
+        res.json({fail: '내용 외에 빈칸이 없게 작성해주세요!'})
+    }
 });
 
 // 메인 페이지 데이터 불러오기

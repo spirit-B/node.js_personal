@@ -4,7 +4,6 @@ const Boards = require('./schemas/boardSchema')
 const path = require('path')
 const app = express();
 const port = 3000;
-const ejs = require('ejs');
 
 // mongoDB 접속
 connect();
@@ -20,6 +19,7 @@ app.use('/api', lookupRouter)
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
+// 모듈 사용
 app.use('/node_modules', express.static(path.join('/node_modules')))
 
 // view 엔진 설정

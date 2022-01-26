@@ -1,14 +1,13 @@
-const { ISO_8601 } = require('moment');
 const mongoose = require('mongoose');
 
 const boardSchema = mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: [true, '제목을 입력하세요.' ]
     },
     name: {
         type: String,
-        required: true
+        required: [true, '이름을 입력하세요.']
     },
     createDate: {
         type: Date,
@@ -16,11 +15,10 @@ const boardSchema = mongoose.Schema({
     },
     password: {
         type: Number,
-        required: true
+        required: [true, '비밀번호를 입력하세요.']
     },
     contents: {
-        type: String,
-        required: true
+        type: String
     }
 });
 

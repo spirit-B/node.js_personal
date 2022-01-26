@@ -40,9 +40,13 @@
                     contents: user_contents,
                     createDate: user_date
                 },
-                success: function () {
-                    location.href = '/';
-                    alert('저장 완료!')
+                success: function (response) {
+                    if(response['success']) {
+                        location.href = '/';
+                        alert(response['success']);
+                    } else {
+                        alert(response['fail']);
+                    }
                 }
             });
         }
